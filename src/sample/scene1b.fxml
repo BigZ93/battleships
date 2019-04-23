@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane alignment="center" hgap="10" prefHeight="100.0" prefWidth="300.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+         <children>
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="40.0" text="IP:port" />
+                  <TextField fx:id="ip1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="30.0" />
+                  <TextField fx:id="ip2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="30.0" />
+                  <TextField fx:id="ip3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="30.0" />
+                  <TextField fx:id="ip4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="30.0" />
+                  <TextField fx:id="port" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="40.0" />
+               </children>
+            </HBox>
+            <Button fx:id="connectBtn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Connect" />
+         </children>
+      </VBox>
+   </children>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
