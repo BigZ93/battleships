@@ -4,9 +4,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.io.IOException;
@@ -15,6 +17,7 @@ import java.util.ResourceBundle;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.image.ImageView;
 
 public class Scene2Controller implements Initializable{
     @FXML
@@ -22,6 +25,12 @@ public class Scene2Controller implements Initializable{
 
     @FXML
     private GridPane enemySea;
+
+    @FXML
+    private GridPane yourSea;
+
+    @FXML
+    private Button msg;
 
     //*********** dev *************
     @FXML
