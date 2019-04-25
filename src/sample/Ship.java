@@ -3,12 +3,12 @@ package sample;
 import java.util.Random;
 
 public class Ship {
-    int id;
-    int x;
-    int y;
-    boolean direction;
-    int length;
-    boolean alive;
+    private int id;
+    private int x;
+    private int y;
+    private boolean direction;
+    private int length;
+    private boolean alive;
 
     public void createShip(int i, int l){
         id = i;

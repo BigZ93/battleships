@@ -1,9 +1,9 @@
 package sample;
 
 public class Sea {
-    int[][] grid;
-    Ship[] ships;
-    int[] lenghts = {2, 3, 3, 4, 5};
+    private int[][] grid;
+    private Ship[] ships;
+    private int[] lenghts = {2, 3, 3, 4, 5};
 
     public Sea() {
         ships = new Ship[5];
