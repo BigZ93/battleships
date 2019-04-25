@@ -51,10 +51,10 @@ public class Scene2Controller implements Initializable{
 
     private void addGridEvent() {
         enemySea.getChildren().forEach(item -> {
-            item.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            item.setOnMouseClicked(new EventHandler<MouseEvent>(){
                 @Override
                 public void handle(MouseEvent event) {
-                    if (event.isPrimaryButtonDown()) {
+                    if(event.isPrimaryButtonDown()) {
                         System.out.println("PrimaryKey event");
                     }
                 }
@@ -76,13 +76,7 @@ public class Scene2Controller implements Initializable{
             remainderY = y%10;
             cellX = (x-remainderX)/10;
             cellY = (y-remainderY)/10;
-            System.out.println(cellX + " " + cellY);
+            //System.out.println(cellX + " " + cellY);
         });
-    }
-
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        msgField.setText("Hello World!");
     }
 }
