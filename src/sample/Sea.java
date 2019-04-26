@@ -4,8 +4,10 @@ public class Sea {
     private int[][] grid;
     private Ship[] ships;
     private int[] lenghts = {2, 3, 3, 4, 5};
+    private int totalHp;
 
     public Sea() {
+        totalHp = 2+3+3+4+5;
         ships = new Ship[5];
         grid = new int[10][10];
         for(int i=0; i<5; i++){
@@ -33,4 +35,7 @@ public class Sea {
         }
     }
 
+    public int checkHp(){
+        return totalHp;
+    }
 }

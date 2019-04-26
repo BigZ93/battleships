@@ -9,6 +9,7 @@ public class Ship {
     private boolean direction;
     private int length;
     private boolean alive;
+    private int hp;
 
     public void createShip(int i, int l){
         id = i;
@@ -17,6 +18,7 @@ public class Ship {
         //false - vertical
         direction = r.nextBoolean();
         length = l;
+        hp = l;
         alive = true;
         if(direction==true){
             x = r.nextInt(10-length);
@@ -28,8 +30,11 @@ public class Ship {
         }
     }
 
-    public void sink(){
-        alive = false;
+    public void hit(){
+        --hp;
+        if(hp==0){
+            alive = false;
+        }
     }
 
     public boolean isAlive(){
