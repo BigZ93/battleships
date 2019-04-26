@@ -4,7 +4,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -32,6 +34,16 @@ public class Scene2Controller implements Initializable{
     @FXML
     private Button msg;
 
+    @FXML
+    private Button[][] buttons = new Button[10][10];
+
+    @FXML
+    private Label[][] labels = new Label[10][10];
+
+    //#4E49EF empty
+    //#B3B0B0 filled
+    //#F53232 hit
+    //#FFFFFF miss
     //*********** dev *************
     @FXML
     public void goBack(ActionEvent event) throws IOException {
@@ -53,39 +65,35 @@ public class Scene2Controller implements Initializable{
         msgField.setText(s);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb){
-        addGridEvent();
+    @FXML
+    private void changeColor(ActionEvent event) throws IOException {
+        buttons[5][5].setStyle("-fx-background-color: #000000");
     }
 
-    private void addGridEvent() {
-        enemySea.getChildren().forEach(item -> {
-            item.setOnMouseClicked(new EventHandler<MouseEvent>(){
-                @Override
-                public void handle(MouseEvent event) {
-                    if(event.isPrimaryButtonDown()) {
-                        System.out.println("PrimaryKey event");
-                    }
-                }
-            });
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+        for(int i=5; i<10; i++){
+            for(int j=5; j<10; j++){
+                buttons[i][j]=new Button();
+                buttons[i][j].setStyle("-fx-background-color: #4E49EF");
+                buttons[i][j].setPrefWidth(28);
+                buttons[i][j].setPrefHeight(28);
+                enemySea.add(buttons[i][j], i, j);
+                enemySea.setHalignment(buttons[i][j], HPos.CENTER);
+                enemySea.setValignment(buttons[i][j], VPos.CENTER);
+            }
+        }
 
-        });
-
-        enemySea.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            int x;
-            int y;
-            int remainderX;
-            int remainderY;
-            int cellX;
-            int cellY;
-
-            x = (int) e.getX();
-            y = (int) e.getY();
-            remainderX = x%10;
-            remainderY = y%10;
-            cellX = (x-remainderX)/10;
-            cellY = (y-remainderY)/10;
-            //System.out.println(cellX + " " + cellY);
-        });
+        for(int i=0; i<10; i++){
+            for(int j=0; j<10; j++) {
+                labels[i][j]=new Label();
+                labels[i][j].setStyle("-fx-background-color: #4E49EF");
+                labels[i][j].setPrefWidth(28);
+                labels[i][j].setPrefHeight(28);
+                yourSea.add(labels[i][j], i, j);
+                yourSea.setHalignment(labels[i][j], HPos.CENTER);
+                yourSea.setValignment(labels[i][j], VPos.CENTER);
+            }
+        }
     }
 }
