@@ -20,6 +20,7 @@ public class Sea {
                 grid[i][j] = 9;
             }
         }
+        //add checking collisions
         for(int i=0; i<5; i++){
             if(ships[i].getDirection()==true)
             {
@@ -37,5 +38,29 @@ public class Sea {
 
     public int checkHp(){
         return totalHp;
+    }
+
+    public Ship getShipInfo(int id){
+        return ships[id];
+    }
+
+    //0 - miss, 1 - hit, 2 - defeat
+    //3 - sink <can be added later>
+    public int shoot(int x, int y){
+        if(grid[x][y]==9){
+            return 0;
+        }
+        else{
+            ships[grid[x][y]].hit();
+            --totalHp;
+            if(ships[grid[x][y]].isAlive()==false)
+            {
+                //return 3
+            }
+            if(totalHp==0){
+                return 2;
+            }
+            return 1;
+        }
     }
 }
