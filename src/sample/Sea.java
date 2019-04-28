@@ -21,18 +21,56 @@ public class Sea {
             }
         }
         //add checking collisions
+        int[] tempShipX;
+        int[] tempShipY;
+        boolean ok=false;
         for(int i=0; i<5; i++){
+            tempShipX = new int[ships[i].getLength()];
+            tempShipY = new int[ships[i].getLength()];
             if(ships[i].getDirection()==true)
             {
+                while(ok==false){
+                    for(int j=0; j<ships[i].getLength(); j++){
+                        tempShipX[j]=ships[i].getX()+j;
+                        tempShipY[j]=ships[i].getY();
+                    }
+                    for(int j=0; j<ships[i].getLength(); j++){
+                        if(grid[tempShipX[j]][tempShipY[j]]!=9){
+                            ships[i].reroll();
+                            break;
+                        }
+                        if(j==ships[i].getLength()-1){
+                            ok = true;
+                        }
+                    }
+
+                }
                 for(int j=0; j<ships[i].getLength(); j++){
                     grid[ships[i].getX()+j][ships[i].getY()] = ships[i].getId();
                 }
             }
             else{
+                while(ok==false){
+                    for(int j=0; j<ships[i].getLength(); j++){
+                        tempShipX[j]=ships[i].getX();
+                        tempShipY[j]=ships[i].getY()+j;
+                    }
+                    for(int j=0; j<ships[i].getLength(); j++){
+                        if(grid[tempShipX[j]][tempShipY[j]]!=9){
+                            ships[i].reroll();
+                            break;
+                        }
+                        if(j==ships[i].getLength()-1){
+                            ok = true;
+                        }
+                    }
+
+                }
                 for(int j=0; j<ships[i].getLength(); j++){
                     grid[ships[i].getX()][ships[i].getY()+j] = ships[i].getId();
                 }
             }
+            ok = false;
         }
     }
 

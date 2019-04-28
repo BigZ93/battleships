@@ -45,7 +45,7 @@ public class Scene2Controller implements Initializable{
     //#B3B0B0 filled
     //#F53232 hit
     //#FFFFFF miss
-    /*
+
     @FXML
     public void goBack(ActionEvent event) throws IOException {
         Parent menuParent = FXMLLoader.load(getClass().getResource("scene1.fxml"));
@@ -54,7 +54,6 @@ public class Scene2Controller implements Initializable{
         gameWindow.setScene(menuScene);
         gameWindow.show();
     }
-    */
 
     //get shot
     @FXML

@@ -60,4 +60,16 @@ public class Ship {
     public boolean getDirection(){
         return direction;
     }
+
+    public void reroll(){
+        Random r = new Random();
+        if(direction==true){
+            x = r.nextInt(10-length);
+            y = r.nextInt(10);
+        }
+        else{
+            x = r.nextInt(10);
+            y = r.nextInt(10-length);
+        }
+    }
 }
