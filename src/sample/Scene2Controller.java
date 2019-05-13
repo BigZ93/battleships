@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class Scene2Controller implements Initializable{
 
     //get shot
     @FXML
-    public void test1(ActionEvent event) throws IOException {
+    public void test1(ActionEvent event){
         Random r=new Random();
         int x=r.nextInt(10);
         int y=r.nextInt(10);
@@ -78,22 +79,28 @@ public class Scene2Controller implements Initializable{
 
     //shoot
     @FXML
-    public void test(ActionEvent event) throws IOException {
-        Random r=new Random();
-        int x=r.nextInt(10);
-        int y=r.nextInt(10);
-        int result=1;
-        changeColorEnemySea(x, y, result);
-        switch (result){
-            case 0:
-                showMsg("MISS");
-                break;
-            case 1:
-                showMsg("HIT");
-                break;
-            case 2:
-                showMsg("VICTORY");
-                break;
+    public void test(ActionEvent event){
+        Node source = (Node) event.getSource();
+        int x = GridPane.getColumnIndex(source);
+        int y = GridPane.getRowIndex(source);
+        System.out.println(x+" "+y);
+        Button btn = (Button) event.getSource();
+        Paint p = btn.getBackground().getFills().get(0).getFill();
+        String c = p.toString();
+        if(c.equals("0x4e49efff")) {
+            int result = 1;
+            changeColorEnemySea(x, y, result);
+            switch (result) {
+                case 0:
+                    showMsg("MISS");
+                    break;
+                case 1:
+                    showMsg("HIT");
+                    break;
+                case 2:
+                    showMsg("VICTORY");
+                    break;
+            }
         }
     }
 
@@ -119,8 +126,8 @@ public class Scene2Controller implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        for(int i=2; i<10; i++){
-            for(int j=2; j<10; j++){
+        for(int i=0; i<10; i++){
+            for(int j=0; j<10; j++){
                 buttons[i][j]=new Button();
                 buttons[i][j].setStyle("-fx-background-color: #4E49EF");
                 buttons[i][j].setPrefWidth(28);
@@ -128,6 +135,7 @@ public class Scene2Controller implements Initializable{
                 enemySea.add(buttons[i][j], i, j);
                 enemySea.setHalignment(buttons[i][j], HPos.CENTER);
                 enemySea.setValignment(buttons[i][j], VPos.CENTER);
+                buttons[i][j].setOnAction(this::test);
             }
         }
         for(int i=0; i<10; i++){

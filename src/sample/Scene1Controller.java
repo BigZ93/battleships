@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 public class Scene1Controller implements Initializable {
     @FXML
     public void changeScene1ToScene1b(ActionEvent event) throws IOException {
+        Main.itsClient();
         Parent connectionParent  = FXMLLoader.load(getClass().getResource("scene1b.fxml"));
         Scene connectionScene = new Scene(connectionParent);
         Stage gameWindow = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -24,6 +25,7 @@ public class Scene1Controller implements Initializable {
 
     @FXML
     public void changeScene1ToScene2(ActionEvent event) throws IOException {
+        Main.itsServer();
         Parent seaParent = FXMLLoader.load(getClass().getResource("scene2.fxml"));
         Scene seaScene = new Scene(seaParent);
         Stage gameWindow = (Stage) ((Node)event.getSource()).getScene().getWindow();

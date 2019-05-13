@@ -9,10 +9,12 @@ import java.util.Scanner;
 public class ClientSocket {
     private Socket socket;
     private Scanner scanner;
+
     private ClientSocket(InetAddress serverAddress, int serverPort) throws Exception {
         this.socket = new Socket(serverAddress, serverPort);
         this.scanner = new Scanner(System.in);
     }
+
     private void start() throws IOException {
         String input;
         while (true) {

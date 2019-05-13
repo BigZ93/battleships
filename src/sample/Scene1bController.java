@@ -8,16 +8,29 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Scene1bController implements Initializable{
     @FXML
+    private TextField ip;
+
+    @FXML
+    private TextField port;
+
+    private String ipAddress;
+    private int portNumber;
+
+    @FXML
     public void connect(ActionEvent event) throws IOException{
-        //read ip:port
-        //connect
-        changeScene1bToScene2(event);
+        ipAddress = ip.getText();
+        portNumber = Integer.parseInt(port.getText());
+        boolean joined = Main.connect(ipAddress, portNumber);
+        if(joined == true) {
+            changeScene1bToScene2(event);
+        }
     }
 
     @FXML
