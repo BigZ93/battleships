@@ -1,31 +1,46 @@
 package sample;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Server {
-    private ServerSocket server;
+    public ServerSocket server;
+    public String clientAddress;
+    public Socket client;
 
-    public Server(String ipAddress) throws Exception {
-        if (ipAddress != null && !ipAddress.isEmpty())
-            this.server = new ServerSocket(0, 1, InetAddress.getByName(ipAddress));
-        else
-            this.server = new ServerSocket(0, 1, InetAddress.getLocalHost());
+    public Server() throws Exception {
+        this.server = new ServerSocket(2019, 1, InetAddress.getLocalHost()); //port:0
     }
 
-    private void listen() throws Exception {
-        String data = null;
-        Socket client = this.server.accept();
-        String clientAddress = client.getInetAddress().getHostAddress();
+    public void start() throws Exception {
+        client = server.accept();
+        clientAddress = client.getInetAddress().getHostAddress();
         System.out.println("\r\nNew connection from " + clientAddress);
+        while(true){
+           listen();
+           send();
+        }
+    }
 
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(client.getInputStream()));
-        while ( (data = in.readLine()) != null ) {
+    public void send() throws IOException{
+        String msg;
+        Scanner scanner = new Scanner(System.in);
+        msg = scanner.nextLine();
+        OutputStream os = client.getOutputStream();
+        PrintWriter out = new PrintWriter(os, true);
+        out.println(msg);
+        out.flush();
+    }
+
+    public void listen() throws IOException{
+        String data = "";
+        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+        while((data = in.readLine()) != null) {
             System.out.println("\r\nMessage from " + clientAddress + ": " + data);
+            break;
         }
     }
 
@@ -37,12 +52,4 @@ public class Server {
         return this.server.getLocalPort();
     }
 
-    public static void main(String[] args) throws Exception {
-        Server app = new Server(args[0]);
-        System.out.println("\r\nRunning Server: " +
-                "Host=" + app.getSocketAddress().getHostAddress() +
-                " Port=" + app.getPort());
-
-        app.listen();
-    }
 }
