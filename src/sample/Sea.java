@@ -20,7 +20,6 @@ public class Sea {
                 grid[i][j] = 9;
             }
         }
-        //add checking collisions
         int[] tempShipX;
         int[] tempShipY;
         boolean ok=false;

@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +47,7 @@ public class Scene2Controller implements Initializable{
     //#B3B0B0 filled
     //#F53232 hit
     //#FFFFFF miss
-
+/*
     @FXML
     public void goBack(ActionEvent event) throws IOException {
         Parent menuParent = FXMLLoader.load(getClass().getResource("scene1.fxml"));
@@ -55,13 +56,17 @@ public class Scene2Controller implements Initializable{
         gameWindow.setScene(menuScene);
         gameWindow.show();
     }
-
-    //get shot
+*/
     @FXML
-    public void test1(ActionEvent event){
-        Random r=new Random();
-        int x=r.nextInt(10);
-        int y=r.nextInt(10);
+    public void getShot() throws IOException{
+        //Random r=new Random();
+        //int x=r.nextInt(10);
+        //int y=r.nextInt(10);
+        String coord = Main.listen();
+        char c = coord.charAt(0);
+        int x = Character.getNumericValue(c);
+        c = coord.charAt(1);
+        int y = Character.getNumericValue(c);
         int result = game.getShot(x, y);
         changeColorYourSea(x, y, result);
         switch (result){
@@ -75,11 +80,11 @@ public class Scene2Controller implements Initializable{
                 showMsg("DEFEAT");
                 break;
         }
+        Main.sendResult(result);
     }
-
-    //shoot
+/*
     @FXML
-    public void test(ActionEvent event){
+    public void shoot(ActionEvent event) throws IOException{
         Node source = (Node) event.getSource();
         int x = GridPane.getColumnIndex(source);
         int y = GridPane.getRowIndex(source);
@@ -88,7 +93,9 @@ public class Scene2Controller implements Initializable{
         Paint p = btn.getBackground().getFills().get(0).getFill();
         String c = p.toString();
         if(c.equals("0x4e49efff")) {
-            int result = 1;
+            Main.sendCoordinates(x, y);
+            String r = Main.listen();
+            int result = Integer.parseInt(r);
             changeColorEnemySea(x, y, result);
             switch (result) {
                 case 0:
@@ -101,20 +108,21 @@ public class Scene2Controller implements Initializable{
                     showMsg("VICTORY");
                     break;
             }
+            getShot();
         }
-    }
-
+    }*/
+/*
     @FXML
     public void changeMsg(ActionEvent event) throws IOException {
         String s = "Hello World!";
         showMsg(s);
     }
-
+*/
     @FXML
-    private void showMsg(String s){
+    public void showMsg(String s){
         msgField.setText(s);
     }
-
+/*
     @FXML
     private void changeColor(ActionEvent event) throws IOException {
 
@@ -122,7 +130,7 @@ public class Scene2Controller implements Initializable{
         int j=5;
         int c=1;
         changeColorYourSea(i, j, c);
-    }
+    }*/
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -135,7 +143,50 @@ public class Scene2Controller implements Initializable{
                 enemySea.add(buttons[i][j], i, j);
                 enemySea.setHalignment(buttons[i][j], HPos.CENTER);
                 enemySea.setValignment(buttons[i][j], VPos.CENTER);
-                buttons[i][j].setOnAction(this::test);
+                //buttons[i][j].setOnAction(this::shoot);
+                //EventHandler<ActionEvent> current = buttons[i][j].getOnAction();
+                //Node sos=(Node) buttons[i][j];
+                buttons[i][j].setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(ActionEvent event){
+                        Node source = (Node) event.getSource();
+                        int x = GridPane.getColumnIndex(source);
+                        int y = GridPane.getRowIndex(source);
+                        System.out.println("");
+                        System.out.println("coordinate: "+x+" "+y);
+                        Button btn = (Button) event.getSource();
+                        Paint p = btn.getBackground().getFills().get(0).getFill();
+                        String c = p.toString();
+                        if(c.equals("0x4e49ef")) {
+                            String r;
+                            try {
+                                Main.sendCoordinates(x, y);
+                                r = Main.listen();
+                            }
+                            catch (IOException e){
+                                throw new RuntimeException("");
+                            }
+                            int result = Integer.parseInt(r);
+                            changeColorEnemySea(x, y, result);
+                            switch (result) {
+                                case 0:
+                                    showMsg("MISS");
+                                    break;
+                                case 1:
+                                    showMsg("HIT");
+                                    break;
+                                case 2:
+                                    showMsg("VICTORY");
+                                    break;
+                            }
+                            try {
+                                getShot();
+                            }
+                            catch (IOException e){
+                                throw new RuntimeException("");
+                            }
+                        }
+                    }
+                });
             }
         }
         for(int i=0; i<10; i++){
@@ -150,32 +201,45 @@ public class Scene2Controller implements Initializable{
             }
         }
         drawShips();
+        if(Main.getRole()==true){
+            try {
+                getShot();
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
+        }
     }
+
+
+
+
+
 
     @FXML
     public void changeColorEnemySea(int i, int j, int color){
-        //1 - hit, 2 - miss
+        //0 - miss, 1 - hit
         switch (color) {
+            case 0:
+                buttons[i][j].setStyle("-fx-background-color: #FFFFFF");
+                break;
             case 1:
                 buttons[i][j].setStyle("-fx-background-color: #F53232");
-                break;
-            case 2:
-                buttons[i][j].setStyle("-fx-background-color: #FFFFFF");
                 break;
         }
     }
 
     @FXML
     public void changeColorYourSea(int i, int j, int color){
-        //1 - hit, 2 - miss, 3 - filled
+        //0 - miss, 1 - hit, 2 - filled
         switch (color) {
+            case 0:
+                labels[i][j].setStyle("-fx-background-color: #FFFFFF");
+                break;
             case 1:
                 labels[i][j].setStyle("-fx-background-color: #F53232");
                 break;
             case 2:
-                labels[i][j].setStyle("-fx-background-color: #FFFFFF");
-                break;
-            case 3:
                 labels[i][j].setStyle("-fx-background-color: #B3B0B0");
                 break;
         }
@@ -193,10 +257,10 @@ public class Scene2Controller implements Initializable{
             l=game.getShipInfo(i).getLength();
             for(int j=0; j<l; j++){
                 if(dir==true){
-                    changeColorYourSea(x+j, y, 3);
+                    changeColorYourSea(x+j, y, 2);
                 }
                 else{
-                    changeColorYourSea(x, y+j, 3);
+                    changeColorYourSea(x, y+j, 2);
                 }
             }
         }

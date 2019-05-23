@@ -26,6 +26,7 @@ public class Scene1Controller implements Initializable {
     @FXML
     public void changeScene1ToScene2(ActionEvent event) throws IOException {
         Main.itsServer();
+        Main.host();
         Parent seaParent = FXMLLoader.load(getClass().getResource("scene2.fxml"));
         Scene seaScene = new Scene(seaParent);
         Stage gameWindow = (Stage) ((Node)event.getSource()).getScene().getWindow();

@@ -7,40 +7,39 @@ import java.util.Scanner;
 
 
 public class ClientSocket {
-    public Socket socket;
-    public Scanner scanner;
-    public InetAddress address;
-    public int port;
+    private Socket socket;
+    private Scanner scanner;
+    private InetAddress address;
+    private int port;
 
-    public ClientSocket(InetAddress serverAddress, int serverPort) throws Exception {
+    public ClientSocket(InetAddress serverAddress, int serverPort) throws IOException {
         this.socket = new Socket(serverAddress, serverPort);
         this.scanner = new Scanner(System.in);
         address = serverAddress;
         port = serverPort;
     }
 
-    public void start() throws IOException {
-        while(true){
-            send();
-            listen();
-        }
-    }
-
-    public void send() throws IOException{
-        String input;
-        scanner = new Scanner(System.in);
-        input = scanner.nextLine();
+    public void send(String msg) throws IOException{
+        //String msg;
+        //scanner = new Scanner(System.in);
+        //msg = scanner.nextLine();
         PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
-        out.println(input);
+        out.println(msg);
         out.flush();
     }
 
-    public void listen() throws IOException{
+    public String listen() throws IOException{
         String data = "";
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         while((data = in.readLine()) != null) {
-            System.out.println("\r\nMessage from " + address + ": " + data);
+            System.out.println("\r\nServer's response " + address + ": " + data);
             break;
         }
+        //int r=Integer.getInteger(data);
+        return data;
+    }
+
+    public InetAddress getAddress() {
+        return socket.getInetAddress();
     }
 }

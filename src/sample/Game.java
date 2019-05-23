@@ -14,11 +14,4 @@ public class Game {
     public int getShot(int x, int y){
         return mySea.shoot(x, y);
     }
-
-
-
-
-
-
-
 }

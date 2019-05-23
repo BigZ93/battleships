@@ -6,18 +6,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.InetAddress;
-import java.util.Scanner;
 
 public class Main extends Application {
     private static boolean role;
-
-
-
-    public static Server sv;
-    public static ClientSocket cl;
-
-    //public static Connection sct;
+    private static Server sv;
+    private static ClientSocket cl;
 
     public static void itsServer(){
         role = true;
@@ -31,48 +26,56 @@ public class Main extends Application {
         return role;
     }
 
-    public static void sendCoordinate(int x, int y){
-
+    public static void sendCoordinates(int x, int y) throws IOException {
+        String s1=Integer.toString(x);
+        String s2=Integer.toString(y);
+        if(role==true){
+            sv.send(s1+s2);
+        }
+        else
+        {
+            cl.send(s1+s2);
+        }
     }
-    public static void sendResult(int r){
-
+    public static void sendResult(int r) throws IOException{
+        String s=Integer.toString(r);
+        if(role==true){
+            sv.send(s);
+        }
+        else
+        {
+            cl.send(s);
+        }
     }
 
-    public static int listen(){
-        return 5;
+    public static String listen() throws IOException{
+        if(role==true){
+            return sv.listen();
+        }
+        else
+        {
+            return cl.listen();
+        }
     }
 
-    public static boolean connect(String ip, int port){
+    public static void host() throws IOException{
+        sv = new Server();
+        System.out.println("\r\nRunning Server: " + "Host=" + sv.getSocketAddress().getHostAddress() + " Port=" + sv.getPort());
+        sv.start();
+    }
+
+    public static boolean connect(String ip, int port) throws IOException{
+        cl = new ClientSocket(InetAddress.getByName(ip), port);
+        System.out.println("\r\nConnected to Server: " + cl.getAddress());
         return true;
     }
 
-
-
-
-
-
-
-
-
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        //sct = new Connection();
+    public void start(Stage primaryStage) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
         primaryStage.setTitle("Battleships");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
-        Scanner x=new Scanner(System.in);
-        String s=x.nextLine();
-        if (s.equals("s")) {
-            sv = new Server();
-            System.out.println("\r\nRunning Server: " + "Host=" + sv.getSocketAddress().getHostAddress() + " Port=" + sv.getPort());
-            sv.start();
-        } else if (s.equals("c")) {
-            cl = new ClientSocket(InetAddress.getByName("192.168.1.233"), 2019);
-            System.out.println("\r\nConnected to Server: " + cl.socket.getInetAddress());
-            cl.start();
-        }
     }
 
     public static void main(String[] args) {
