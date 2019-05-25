@@ -78,7 +78,8 @@ public class Scene2Controller implements Initializable{
                 showMsg("enemy HIT");
                 break;
             case 2:
-                showMsg("DEFEAT, click START to proceed");
+                showMsg("DEFEAT, click FINISH to proceed");
+                go.setText("FINISH");
                 go.setDisable(false);
                 end=true;
                 break;
@@ -121,8 +122,9 @@ public class Scene2Controller implements Initializable{
                     showMsg("HIT");
                     break;
                 case 2:
-                    showMsg("VICTORY");
-                    fire.setDisable(false);
+                    showMsg("VICTORY, click FINISH to proceed");
+                    go.setText("FINISH");
+                    fire.setDisable(true);
                     go.setDisable(false);
                     end=true;
                     break;

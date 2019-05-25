@@ -29,6 +29,12 @@ public class Scene3Controller implements Initializable{
 
     @FXML
     public void goBack(ActionEvent event) throws IOException {
+        try{
+            Main.disconnect();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
         Parent menuParent = FXMLLoader.load(getClass().getResource("scene1.fxml"));
         Scene menuScene = new Scene(menuParent);
         Stage gameWindow = (Stage) ((Node)event.getSource()).getScene().getWindow();

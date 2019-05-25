@@ -73,10 +73,12 @@ public class Main extends Application {
     public static void disconnect()throws IOException{
         if(role==true){
             sv.disconnect();
+            sv=null;
         }
         else
         {
             cl.disconnect();
+            cl=null;
         }
     }
 
