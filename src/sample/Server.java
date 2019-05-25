@@ -11,7 +11,7 @@ public class Server {
     private Socket client;
 
     public Server() throws IOException {
-        this.server = new ServerSocket(2019, 1, InetAddress.getLocalHost()); //port:0
+        this.server = new ServerSocket(2019, 1, InetAddress.getLocalHost());
     }
 
     public void start() throws IOException {

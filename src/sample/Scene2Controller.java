@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.util.PrimitiveIterator;
 import java.util.ResourceBundle;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Label;
@@ -28,6 +29,12 @@ import java.util.Random;
 public class Scene2Controller implements Initializable{
     @FXML
     private Label msgField;
+
+    @FXML
+    private Button go;
+
+    @FXML
+    private Button fire;
 
     @FXML
     private GridPane enemySea;
@@ -42,6 +49,10 @@ public class Scene2Controller implements Initializable{
     private Label[][] labels = new Label[10][10];
 
     private Game game = new Game();
+    private int x2;
+    private int y2;
+    private int result;
+    private boolean shotFlag;
 
     //#4E49EF empty
     //#B3B0B0 filled
@@ -81,10 +92,11 @@ public class Scene2Controller implements Initializable{
                 break;
         }
         Main.sendResult(result);
+        fire.setDisable(false);
     }
-/*
+
     @FXML
-    public void shoot(ActionEvent event) throws IOException{
+    public void shoot(ActionEvent event){
         Node source = (Node) event.getSource();
         int x = GridPane.getColumnIndex(source);
         int y = GridPane.getRowIndex(source);
@@ -92,11 +104,21 @@ public class Scene2Controller implements Initializable{
         Button btn = (Button) event.getSource();
         Paint p = btn.getBackground().getFills().get(0).getFill();
         String c = p.toString();
-        if(c.equals("0x4e49efff")) {
-            Main.sendCoordinates(x, y);
-            String r = Main.listen();
-            int result = Integer.parseInt(r);
-            changeColorEnemySea(x, y, result);
+        if(c.equals("0x4e49efff") && shotFlag==false) {
+            x2=x;
+            y2=y;
+            shotFlag=true;
+            msgField.setText("Click FIRE");
+            String r = "";
+            try {
+                Main.sendCoordinates(x, y);
+                r = Main.listen();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            result = Integer.parseInt(r);
+            changeColorEnemySea(x, y, result);;
             switch (result) {
                 case 0:
                     showMsg("MISS");
@@ -108,9 +130,60 @@ public class Scene2Controller implements Initializable{
                     showMsg("VICTORY");
                     break;
             }
+            /*try {
+                getShot();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }*/
+        }
+    }
+
+    @FXML
+    public void temp(ActionEvent event){
+        /*String r = "";
+        try {
+            Main.sendCoordinates(x2, y2);
+            r = Main.listen();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        int result = Integer.parseInt(r);*/
+        /*changeColorEnemySea(x2, y2, result);
+        switch (result) {
+            case 0:
+                showMsg("MISS");
+                break;
+            case 1:
+                showMsg("HIT");
+                break;
+            case 2:
+                showMsg("VICTORY");
+                break;
+        }*/
+        fire.setDisable(true);
+        try {
             getShot();
         }
-    }*/
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        shotFlag=false;
+    }
+
+    @FXML
+    public void startListening(ActionEvent event){
+        msgField.setText("waiting...");
+        try{
+            getShot();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        shotFlag=false;
+        go.setDisable(true);
+    }
 /*
     @FXML
     public void changeMsg(ActionEvent event) throws IOException {
@@ -143,50 +216,7 @@ public class Scene2Controller implements Initializable{
                 enemySea.add(buttons[i][j], i, j);
                 enemySea.setHalignment(buttons[i][j], HPos.CENTER);
                 enemySea.setValignment(buttons[i][j], VPos.CENTER);
-                //buttons[i][j].setOnAction(this::shoot);
-                //EventHandler<ActionEvent> current = buttons[i][j].getOnAction();
-                //Node sos=(Node) buttons[i][j];
-                buttons[i][j].setOnAction(new EventHandler<ActionEvent>(){
-                    public void handle(ActionEvent event){
-                        Node source = (Node) event.getSource();
-                        int x = GridPane.getColumnIndex(source);
-                        int y = GridPane.getRowIndex(source);
-                        System.out.println("");
-                        System.out.println("coordinate: "+x+" "+y);
-                        Button btn = (Button) event.getSource();
-                        Paint p = btn.getBackground().getFills().get(0).getFill();
-                        String c = p.toString();
-                        if(c.equals("0x4e49ef")) {
-                            String r;
-                            try {
-                                Main.sendCoordinates(x, y);
-                                r = Main.listen();
-                            }
-                            catch (IOException e){
-                                throw new RuntimeException("");
-                            }
-                            int result = Integer.parseInt(r);
-                            changeColorEnemySea(x, y, result);
-                            switch (result) {
-                                case 0:
-                                    showMsg("MISS");
-                                    break;
-                                case 1:
-                                    showMsg("HIT");
-                                    break;
-                                case 2:
-                                    showMsg("VICTORY");
-                                    break;
-                            }
-                            try {
-                                getShot();
-                            }
-                            catch (IOException e){
-                                throw new RuntimeException("");
-                            }
-                        }
-                    }
-                });
+                buttons[i][j].setOnAction(this::shoot);
             }
         }
         for(int i=0; i<10; i++){
@@ -202,19 +232,16 @@ public class Scene2Controller implements Initializable{
         }
         drawShips();
         if(Main.getRole()==true){
-            try {
-                getShot();
-            }
-            catch (IOException e){
-                e.printStackTrace();
-            }
+            msgField.setText("Click START");
+            fire.setDisable(true);
+            shotFlag=true;
+        }
+        else{
+            msgField.setText("Take a shot");
+            go.setDisable(true);
+            shotFlag=false;
         }
     }
-
-
-
-
-
 
     @FXML
     public void changeColorEnemySea(int i, int j, int color){
