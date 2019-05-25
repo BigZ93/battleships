@@ -9,16 +9,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Scene1Controller implements Initializable {
-    @FXML
-    private Label label;
-
     @FXML
     private TextField port;
 

@@ -28,7 +28,6 @@ public class Scene1bController implements Initializable{
         ipAddress = ip.getText();
         portNumber = Integer.parseInt(port.getText());
         boolean joined = Main.connect(ipAddress, portNumber);
-        //Main.connect(ipAddress, portNumber);
         if(joined == true) {
             changeScene1bToScene2(event);
         }

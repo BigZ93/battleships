@@ -21,9 +21,6 @@ public class Server {
     }
 
     public void send(String msg) throws IOException{
-        //String msg;
-        //Scanner scanner = new Scanner(System.in);
-        //msg = scanner.nextLine();
         OutputStream os = client.getOutputStream();
         PrintWriter out = new PrintWriter(os, true);
         out.println(msg);
@@ -37,7 +34,6 @@ public class Server {
             System.out.println("\r\nClient's response " + clientAddress + ": " + data);
             break;
         }
-        //int r=Integer.getInteger(data);
         return data;
     }
 

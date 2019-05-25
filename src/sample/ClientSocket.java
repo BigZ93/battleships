@@ -20,9 +20,6 @@ public class ClientSocket {
     }
 
     public void send(String msg) throws IOException{
-        //String msg;
-        //scanner = new Scanner(System.in);
-        //msg = scanner.nextLine();
         PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
         out.println(msg);
         out.flush();
@@ -35,7 +32,6 @@ public class ClientSocket {
             System.out.println("\r\nServer's response " + address + ": " + data);
             break;
         }
-        //int r=Integer.getInteger(data);
         return data;
     }
 

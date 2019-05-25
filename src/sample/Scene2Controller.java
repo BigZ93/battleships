@@ -1,12 +1,9 @@
 package sample;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -17,14 +14,9 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
-import java.util.PrimitiveIterator;
 import java.util.ResourceBundle;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.image.ImageView;
-import java.util.Scanner;
-import java.util.Random;
 
 public class Scene2Controller implements Initializable{
     @FXML
@@ -71,9 +63,6 @@ public class Scene2Controller implements Initializable{
 
     @FXML
     public void getShot() throws IOException{
-        //Random r=new Random();
-        //int x=r.nextInt(10);
-        //int y=r.nextInt(10);
         String coord = Main.listen();
         char c = coord.charAt(0);
         int x = Character.getNumericValue(c);
@@ -87,8 +76,6 @@ public class Scene2Controller implements Initializable{
                 break;
             case 1:
                 showMsg("enemy HIT");
-                //go.setDisable(false);
-                //end=true;
                 break;
             case 2:
                 showMsg("DEFEAT, click START to proceed");
@@ -132,9 +119,6 @@ public class Scene2Controller implements Initializable{
                     break;
                 case 1:
                     showMsg("HIT");
-                    //fire.setDisable(true);
-                    //go.setDisable(false);
-                    //end=true;
                     break;
                 case 2:
                     showMsg("VICTORY");
@@ -143,38 +127,11 @@ public class Scene2Controller implements Initializable{
                     end=true;
                     break;
             }
-            /*try {
-                getShot();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }*/
         }
     }
 
     @FXML
     public void waiting(ActionEvent event){ //for WAIT button
-        /*String r = "";
-        try {
-            Main.sendCoordinates(x2, y2);
-            r = Main.listen();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        int result = Integer.parseInt(r);*/
-        /*changeColorEnemySea(x2, y2, result);
-        switch (result) {
-            case 0:
-                showMsg("MISS");
-                break;
-            case 1:
-                showMsg("HIT");
-                break;
-            case 2:
-                showMsg("VICTORY");
-                break;
-        }*/
         fire.setDisable(true);
         try {
             getShot();
@@ -206,26 +163,11 @@ public class Scene2Controller implements Initializable{
             }
         }
     }
-/*
-    @FXML
-    public void changeMsg(ActionEvent event) throws IOException {
-        String s = "Hello World!";
-        showMsg(s);
-    }
-*/
+
     @FXML
     public void showMsg(String s){
         msgField.setText(s);
     }
-/*
-    @FXML
-    private void changeColor(ActionEvent event) throws IOException {
-
-        int i=5;
-        int j=5;
-        int c=1;
-        changeColorYourSea(i, j, c);
-    }*/
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
