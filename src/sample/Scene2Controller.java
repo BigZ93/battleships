@@ -53,21 +53,22 @@ public class Scene2Controller implements Initializable{
     private int y2;
     private int result;
     private boolean shotFlag;
+    private boolean end;
 
     //#4E49EF empty
     //#B3B0B0 filled
     //#F53232 hit
     //#FFFFFF miss
-/*
+
     @FXML
-    public void goBack(ActionEvent event) throws IOException {
-        Parent menuParent = FXMLLoader.load(getClass().getResource("scene1.fxml"));
+    public void gameOver(ActionEvent event) throws IOException {
+        Parent menuParent = FXMLLoader.load(getClass().getResource("scene3.fxml"));
         Scene menuScene = new Scene(menuParent);
         Stage gameWindow = (Stage) ((Node)event.getSource()).getScene().getWindow();
         gameWindow.setScene(menuScene);
         gameWindow.show();
     }
-*/
+
     @FXML
     public void getShot() throws IOException{
         //Random r=new Random();
@@ -86,13 +87,19 @@ public class Scene2Controller implements Initializable{
                 break;
             case 1:
                 showMsg("enemy HIT");
+                //go.setDisable(false);
+                //end=true;
                 break;
             case 2:
-                showMsg("DEFEAT");
+                showMsg("DEFEAT, click START to proceed");
+                go.setDisable(false);
+                end=true;
                 break;
         }
         Main.sendResult(result);
-        fire.setDisable(false);
+        if (end == false) {
+            fire.setDisable(false);
+        }
     }
 
     @FXML
@@ -108,7 +115,7 @@ public class Scene2Controller implements Initializable{
             x2=x;
             y2=y;
             shotFlag=true;
-            msgField.setText("Click FIRE");
+            msgField.setText("Click WAIT to wait for response");
             String r = "";
             try {
                 Main.sendCoordinates(x, y);
@@ -125,9 +132,15 @@ public class Scene2Controller implements Initializable{
                     break;
                 case 1:
                     showMsg("HIT");
+                    //fire.setDisable(true);
+                    //go.setDisable(false);
+                    //end=true;
                     break;
                 case 2:
                     showMsg("VICTORY");
+                    fire.setDisable(false);
+                    go.setDisable(false);
+                    end=true;
                     break;
             }
             /*try {
@@ -140,7 +153,7 @@ public class Scene2Controller implements Initializable{
     }
 
     @FXML
-    public void temp(ActionEvent event){
+    public void waiting(ActionEvent event){ //for WAIT button
         /*String r = "";
         try {
             Main.sendCoordinates(x2, y2);
@@ -173,16 +186,25 @@ public class Scene2Controller implements Initializable{
     }
 
     @FXML
-    public void startListening(ActionEvent event){
-        msgField.setText("waiting...");
-        try{
-            getShot();
+    public void startListening(ActionEvent event){  //for START button
+        if (end == false) {
+            msgField.setText("waiting...");
+            try {
+                getShot();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            shotFlag = false;
+            go.setDisable(true);
         }
-        catch (IOException e){
-            e.printStackTrace();
+        else {
+            try {
+                gameOver(event);
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
         }
-        shotFlag=false;
-        go.setDisable(true);
     }
 /*
     @FXML
@@ -241,6 +263,7 @@ public class Scene2Controller implements Initializable{
             go.setDisable(true);
             shotFlag=false;
         }
+        end=false;
     }
 
     @FXML

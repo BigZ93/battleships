@@ -42,4 +42,9 @@ public class ClientSocket {
     public InetAddress getAddress() {
         return socket.getInetAddress();
     }
+
+    public void disconnect() throws IOException{
+        socket.close();
+        System.out.println("Disconnected");
+    }
 }

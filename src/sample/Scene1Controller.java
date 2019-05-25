@@ -8,11 +8,22 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Scene1Controller implements Initializable {
+    @FXML
+    private Label label;
+
+    @FXML
+    private TextField port;
+
+    private int portNumber;
+
     @FXML
     public void changeScene1ToScene1b(ActionEvent event) throws IOException {
         Main.itsClient();
@@ -26,12 +37,15 @@ public class Scene1Controller implements Initializable {
     @FXML
     public void changeScene1ToScene2(ActionEvent event) throws IOException {
         Main.itsServer();
-        Main.host();
-        Parent seaParent = FXMLLoader.load(getClass().getResource("scene2.fxml"));
-        Scene seaScene = new Scene(seaParent);
-        Stage gameWindow = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        gameWindow.setScene(seaScene);
-        gameWindow.show();
+        if(port.getText().isEmpty()==false) {
+            portNumber = Integer.parseInt(port.getText());
+            Main.host(portNumber);
+            Parent seaParent = FXMLLoader.load(getClass().getResource("scene2.fxml"));
+            Scene seaScene = new Scene(seaParent);
+            Stage gameWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            gameWindow.setScene(seaScene);
+            gameWindow.show();
+        }
     }
 
     @Override

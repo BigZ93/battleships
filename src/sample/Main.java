@@ -58,8 +58,8 @@ public class Main extends Application {
         }
     }
 
-    public static void host() throws IOException{
-        sv = new Server();
+    public static void host(int port) throws IOException{
+        sv = new Server(port);
         System.out.println("\r\nRunning Server: " + "Host=" + sv.getSocketAddress().getHostAddress() + " Port=" + sv.getPort());
         sv.start();
     }
@@ -68,6 +68,16 @@ public class Main extends Application {
         cl = new ClientSocket(InetAddress.getByName(ip), port);
         System.out.println("\r\nConnected to Server: " + cl.getAddress());
         return true;
+    }
+
+    public static void disconnect()throws IOException{
+        if(role==true){
+            sv.disconnect();
+        }
+        else
+        {
+            cl.disconnect();
+        }
     }
 
     @Override

@@ -10,8 +10,8 @@ public class Server {
     private String clientAddress;
     private Socket client;
 
-    public Server() throws IOException {
-        this.server = new ServerSocket(2019, 1, InetAddress.getLocalHost());
+    public Server(int port) throws IOException {
+        this.server = new ServerSocket(port, 1, InetAddress.getLocalHost());
     }
 
     public void start() throws IOException {
@@ -49,4 +49,9 @@ public class Server {
         return this.server.getLocalPort();
     }
 
+    public void disconnect() throws IOException{
+        client.close();
+        server.close();
+        System.out.println("Client disconnected, server closed");
+    }
 }
