@@ -82,11 +82,12 @@ public class Scene2Controller implements Initializable{
                 go.setText("FINISH");
                 go.setDisable(false);
                 end=true;
+                changeColorYourSea(x, y, 1);
                 break;
         }
         Main.sendResult(result);
         if (end == false) {
-            fire.setDisable(false);
+            //fire.setDisable(false);
         }
     }
 
@@ -100,6 +101,7 @@ public class Scene2Controller implements Initializable{
         Paint p = btn.getBackground().getFills().get(0).getFill();
         String c = p.toString();
         if(c.equals("0x4e49efff") && shotFlag==false) {
+            fire.setDisable(false);
             x2=x;
             y2=y;
             shotFlag=true;
@@ -112,8 +114,15 @@ public class Scene2Controller implements Initializable{
             catch (IOException e) {
                 e.printStackTrace();
             }
+
+            //for testing java+java on local host
             result = Integer.parseInt(r);
-            changeColorEnemySea(x, y, result);;
+
+            //for playing java+python on 2 pcs
+            //int r2 = r.charAt(0);
+            //result = Character.getNumericValue(r2);
+
+            changeColorEnemySea(x, y, result);
             switch (result) {
                 case 0:
                     showMsg("MISS");
@@ -127,6 +136,7 @@ public class Scene2Controller implements Initializable{
                     fire.setDisable(true);
                     go.setDisable(false);
                     end=true;
+                    changeColorEnemySea(x, y, 1);
                     break;
             }
         }
@@ -135,13 +145,17 @@ public class Scene2Controller implements Initializable{
     @FXML
     public void waiting(ActionEvent event){ //for WAIT button
         fire.setDisable(true);
-        try {
-            getShot();
+        if(end==false) {
+            try {
+                getShot();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            shotFlag = false;
         }
-        catch (IOException e) {
-            e.printStackTrace();
+        else{
+            changeColorEnemySea(x2, y2, 1);
         }
-        shotFlag=false;
     }
 
     @FXML
@@ -197,9 +211,9 @@ public class Scene2Controller implements Initializable{
             }
         }
         drawShips();
+        fire.setDisable(true);
         if(Main.getRole()==true){
             msgField.setText("Click START");
-            fire.setDisable(true);
             shotFlag=true;
         }
         else{

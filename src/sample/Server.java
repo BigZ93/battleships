@@ -28,6 +28,7 @@ public class Server {
     }
 
     public String listen() throws IOException{
+        //for testing java+java on local host
         String data = "";
         BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         while((data = in.readLine()) != null) {
@@ -35,6 +36,20 @@ public class Server {
             break;
         }
         return data;
+
+        //for playing java+python on 2 pcs
+        /*int count;
+        DataInputStream in=new DataInputStream(new BufferedInputStream(client.getInputStream()));
+        DataOutputStream out=new DataOutputStream(new BufferedOutputStream(client.getOutputStream()));
+        byte[] buffer=new byte[4];
+        String data="";
+        while((count=in.read(buffer))>0){
+            out.write(buffer, 0, count);
+            data=new String(buffer);
+            System.out.println("\r\nClient's response " + clientAddress + ": " + data);
+            break;
+        }
+        return data;*/
     }
 
     public InetAddress getSocketAddress() {
