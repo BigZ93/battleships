@@ -11,6 +11,20 @@ public class Ship {
     private boolean alive;
     private int hp;
 
+    //for manual ship placement
+    public void makeShip(int i, int l, boolean d, int x2, int y2){
+        id = i;
+        //true - horizontal
+        //false - vertical
+        direction = d;
+        length = l;
+        hp = l;
+        alive = true;
+        x=x2;
+        y=y2;
+    }
+
+    //for random ship placement
     public void createShip(int i, int l){
         id = i;
         Random r = new Random();
@@ -61,6 +75,7 @@ public class Ship {
         return direction;
     }
 
+    //for random ship placement
     public void reroll(){
         Random r = new Random();
         if(direction==true){

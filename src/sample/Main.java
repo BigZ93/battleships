@@ -65,9 +65,9 @@ public class Main extends Application {
     }
 
     public static boolean connect(String ip, int port) throws IOException{
-        cl = new ClientSocket(InetAddress.getByName(ip), port);
-        System.out.println("\r\nConnected to Server: " + cl.getAddress());
-        return true;
+            cl = new ClientSocket(InetAddress.getByName(ip), port);
+            System.out.println("\r\nConnected to Server: " + cl.getAddress());
+            return true;
     }
 
     public static void disconnect()throws IOException{

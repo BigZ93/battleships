@@ -29,16 +29,16 @@ public class Server {
 
     public String listen() throws IOException{
         //for testing java+java on local host
-        String data = "";
+        /*String data = "";
         BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         while((data = in.readLine()) != null) {
             System.out.println("\r\nClient's response " + clientAddress + ": " + data);
             break;
         }
-        return data;
+        return data;*/
 
         //for playing java+python on 2 pcs
-        /*int count;
+        int count;
         DataInputStream in=new DataInputStream(new BufferedInputStream(client.getInputStream()));
         DataOutputStream out=new DataOutputStream(new BufferedOutputStream(client.getOutputStream()));
         byte[] buffer=new byte[4];
@@ -49,7 +49,7 @@ public class Server {
             System.out.println("\r\nClient's response " + clientAddress + ": " + data);
             break;
         }
-        return data;*/
+        return data;
     }
 
     public InetAddress getSocketAddress() {

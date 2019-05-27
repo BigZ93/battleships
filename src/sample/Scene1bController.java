@@ -25,11 +25,13 @@ public class Scene1bController implements Initializable{
 
     @FXML
     public void connect(ActionEvent event) throws IOException{
-        ipAddress = ip.getText();
-        portNumber = Integer.parseInt(port.getText());
-        boolean joined = Main.connect(ipAddress, portNumber);
-        if(joined == true) {
-            changeScene1bToScene2(event);
+        if (ip.getText().isEmpty() == false && port.getText().isEmpty() == false) {
+            ipAddress = ip.getText();
+            portNumber = Integer.parseInt(port.getText());
+            boolean joined = Main.connect(ipAddress, portNumber);
+            if (joined == true) {
+                changeScene1bToScene2(event);
+            }
         }
     }
 

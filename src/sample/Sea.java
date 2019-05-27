@@ -1,5 +1,7 @@
 package sample;
 
+import java.util.Scanner;
+
 public class Sea {
     private int[][] grid;
     private Ship[] ships;
@@ -10,9 +12,59 @@ public class Sea {
         totalHp = 2+3+3+4+5;
         ships = new Ship[5];
         grid = new int[10][10];
+        Scanner scanner = new Scanner(System.in);
         for(int i=0; i<5; i++){
             ships[i] = new Ship();
-            ships[i].createShip(i, lenghts[i]);
+            //for random ship placement
+            //ships[i].createShip(i, lenghts[i]);
+
+            //for manual ship placement
+            int x=0;
+            int y=0;
+            boolean d=true;
+            int d2;
+            boolean good=false;
+            while (good==false) {
+                System.out.println("Give direction of ship "+i+" (0-vertical / 1-horizontal)");
+                d2 = scanner.nextInt();
+                if(d2==1) {
+                    d=true;
+                    System.out.println("Give X of ship " + i);
+                    x = scanner.nextInt();
+                    if(x>10-lenghts[i]){
+                        System.out.println("Wrong X");
+                        continue;
+                    }
+                    System.out.println("Give Y of ship " + i);
+                    y = scanner.nextInt();
+                    if(y>=10){
+                        System.out.println("Wrong Y");
+                        continue;
+                    }
+                    good=true;
+                }
+                else if(d2==0){
+                    d=false;
+                    System.out.println("Give X of ship " + i);
+                    x = scanner.nextInt();
+                    if(x>=10){
+                        System.out.println("Wrong X");
+                        continue;
+                    }
+                    System.out.println("Give Y of ship " + i);
+                    y = scanner.nextInt();
+                    if(y>10-lenghts[i]){
+                        System.out.println("Wrong Y");
+                        continue;
+                    }
+                    good=true;
+                }
+                else {
+                    System.out.println("Wrong direction");
+                }
+            }
+            ships[i].makeShip(i, lenghts[i], d, x, y);
+
         }
         for(int i=0; i<10; i++){
             for(int j=0; j<10; j++){
@@ -35,7 +87,57 @@ public class Sea {
                     }
                     for(int j=0; j<ships[i].getLength(); j++){
                         if(grid[tempShipX[j]][tempShipY[j]]!=9){
-                            ships[i].reroll();
+                            //for random ship placement
+                            //ships[i].reroll();
+
+                            //for manual ship placement
+                            System.out.println("Collision! Give new spawn for ship "+i);
+                            int x=0;
+                            int y=0;
+                            boolean d=true;
+                            int d2;
+                            boolean good=false;
+                            while (good==false) {
+                                System.out.println("Give direction of ship "+i+" (0-vertical / 1-horizontal)");
+                                d2 = scanner.nextInt();
+                                if(d2==1) {
+                                    d=true;
+                                    System.out.println("Give X of ship " + i);
+                                    x = scanner.nextInt();
+                                    if(x>10-lenghts[i]){
+                                        System.out.println("Wrong X");
+                                        continue;
+                                    }
+                                    System.out.println("Give Y of ship " + i);
+                                    y = scanner.nextInt();
+                                    if(y>=10){
+                                        System.out.println("Wrong Y");
+                                        continue;
+                                    }
+                                    good=true;
+                                }
+                                else if(d2==0){
+                                    d=false;
+                                    System.out.println("Give X of ship " + i);
+                                    x = scanner.nextInt();
+                                    if(x>=10){
+                                        System.out.println("Wrong X");
+                                        continue;
+                                    }
+                                    System.out.println("Give Y of ship " + i);
+                                    y = scanner.nextInt();
+                                    if(y>10-lenghts[i]){
+                                        System.out.println("Wrong Y");
+                                        continue;
+                                    }
+                                    good=true;
+                                }
+                                else {
+                                    System.out.println("Wrong direction");
+                                }
+                            }
+                            ships[i].makeShip(i, lenghts[i], d, x, y);
+
                             break;
                         }
                         if(j==ships[i].getLength()-1){
@@ -56,7 +158,56 @@ public class Sea {
                     }
                     for(int j=0; j<ships[i].getLength(); j++){
                         if(grid[tempShipX[j]][tempShipY[j]]!=9){
-                            ships[i].reroll();
+                            //for random ship placement
+                            //ships[i].reroll();
+
+                            //for manual ship placement
+                            int x=0;
+                            int y=0;
+                            boolean d=true;
+                            int d2;
+                            boolean good=false;
+                            while (good==false) {
+                                System.out.println("Give direction of ship "+i+" (0-vertical / 1-horizontal)");
+                                d2 = scanner.nextInt();
+                                if(d2==1) {
+                                    d=true;
+                                    System.out.println("Give X of ship " + i);
+                                    x = scanner.nextInt();
+                                    if(x>10-lenghts[i]){
+                                        System.out.println("Wrong X");
+                                        continue;
+                                    }
+                                    System.out.println("Give Y of ship " + i);
+                                    y = scanner.nextInt();
+                                    if(y>=10){
+                                        System.out.println("Wrong Y");
+                                        continue;
+                                    }
+                                    good=true;
+                                }
+                                else if(d2==0){
+                                    d=false;
+                                    System.out.println("Give X of ship " + i);
+                                    x = scanner.nextInt();
+                                    if(x>=10){
+                                        System.out.println("Wrong X");
+                                        continue;
+                                    }
+                                    System.out.println("Give Y of ship " + i);
+                                    y = scanner.nextInt();
+                                    if(y>10-lenghts[i]){
+                                        System.out.println("Wrong Y");
+                                        continue;
+                                    }
+                                    good=true;
+                                }
+                                else {
+                                    System.out.println("Wrong direction");
+                                }
+                            }
+                            ships[i].makeShip(i, lenghts[i], d, x, y);
+
                             break;
                         }
                         if(j==ships[i].getLength()-1){

@@ -15,6 +15,8 @@ import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
+
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
@@ -86,9 +88,6 @@ public class Scene2Controller implements Initializable{
                 break;
         }
         Main.sendResult(result);
-        if (end == false) {
-            //fire.setDisable(false);
-        }
     }
 
     @FXML
@@ -116,11 +115,11 @@ public class Scene2Controller implements Initializable{
             }
 
             //for testing java+java on local host
-            result = Integer.parseInt(r);
+            //result = Integer.parseInt(r);
 
             //for playing java+python on 2 pcs
-            //int r2 = r.charAt(0);
-            //result = Character.getNumericValue(r2);
+            int r2 = r.charAt(0);
+            result = Character.getNumericValue(r2);
 
             changeColorEnemySea(x, y, result);
             switch (result) {
