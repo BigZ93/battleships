@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class Scene3Controller implements Initializable{
     @FXML
-    private void quitGame(ActionEvent event){
+    public void quitGame(ActionEvent event){
         try{
             Main.disconnect();
         }
